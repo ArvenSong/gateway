@@ -23,3 +23,10 @@ spring:
     view:
       prefix: /
       suffix: .html
+config:
+  model:
+    model-list:
+      - name: root
+        url: http://www.baidu.com
+      - name: tally
+        url: http://localhost:8080/tally/
