@@ -1,10 +1,16 @@
 debug: true
 server:
-  port: 80
+  port: 443
   context-path: /
   compression:
     enabled: true
     mime-types: application/json,application/xml,text/html,text/xml,text/plain
+  ssl:
+    enabled: true
+    key-store: /home/tomcat/apache-tomcat-8.5.8/cert/your-name.jks
+    key-password: 19930308you
+    key-store-type: JKS
+    key-alias: 1
 spring:
 #  thymeleaf:
 #    cache: false
