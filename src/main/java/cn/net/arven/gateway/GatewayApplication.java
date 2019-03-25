@@ -10,40 +10,43 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
+@EnableZuulProxy
+@EnableEurekaClient
 public class GatewayApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(GatewayApplication.class, args);
     }
-    @Bean
-    public EmbeddedServletContainerFactory servletContainer(){
-        TomcatEmbeddedServletContainerFactory tomcat=new TomcatEmbeddedServletContainerFactory(){
-            @Override
-            protected void postProcessContext(Context context) {
-                SecurityConstraint securityConstraint=new SecurityConstraint();
-                securityConstraint.setUserConstraint("CONFIDENTIAL");//confidential
-                SecurityCollection collection=new SecurityCollection();
-                collection.addPattern("/*");
-                securityConstraint.addCollection(collection);
-                context.addConstraint(securityConstraint);
-            }
-        };
-        tomcat.addAdditionalTomcatConnectors(httpConnector());
-        return tomcat;
-    }
-
-    @Bean
-    public Connector httpConnector(){
-        Connector connector=new Connector("org.apache.coyote.http11.Http11NioProtocol");
-        connector.setScheme("http");
-        connector.setPort(80);
-        connector.setSecure(false);
-        connector.setRedirectPort(443);
-        return connector;
-    }
+//    @Bean
+//    public EmbeddedServletContainerFactory servletContainer(){
+//        TomcatEmbeddedServletContainerFactory tomcat=new TomcatEmbeddedServletContainerFactory(){
+//            @Override
+//            protected void postProcessContext(Context context) {
+//                SecurityConstraint securityConstraint=new SecurityConstraint();
+//                securityConstraint.setUserConstraint("CONFIDENTIAL");//confidential
+//                SecurityCollection collection=new SecurityCollection();
+//                collection.addPattern("/*");
+//                securityConstraint.addCollection(collection);
+//                context.addConstraint(securityConstraint);
+//            }
+//        };
+//        tomcat.addAdditionalTomcatConnectors(httpConnector());
+//        return tomcat;
+//    }
+//
+//    @Bean
+//    public Connector httpConnector(){
+//        Connector connector=new Connector("org.apache.coyote.http11.Http11NioProtocol");
+//        connector.setScheme("http");
+//        connector.setPort(80);
+//        connector.setSecure(false);
+//        connector.setRedirectPort(443);
+//        return connector;
+//    }
 }
 

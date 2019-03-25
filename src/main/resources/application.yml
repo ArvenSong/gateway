@@ -1,16 +1,16 @@
 debug: true
 server:
-  port: 443
+  port: 80
   context-path: /
   compression:
     enabled: true
     mime-types: application/json,application/xml,text/html,text/xml,text/plain
-  ssl:
-    enabled: true
-    key-store: /home/tomcat/apache-tomcat-8.5.8/cert/your-name.jks
-    key-password: 19930308you
-    key-store-type: JKS
-    key-alias: 1
+#  ssl:
+#    enabled: true
+#    key-store: /home/tomcat/apache-tomcat-8.5.8/cert/your-name.jks
+#    key-password: 19930308you
+#    key-store-type: JKS
+#    key-alias: 1
 spring:
 #  thymeleaf:
 #    cache: false
@@ -29,10 +29,11 @@ spring:
     view:
       prefix: /
       suffix: .html
-config:
-  model:
-    model-list:
-      - name: root
-        url: http://www.baidu.com
-      - name: tally
-        url: http://localhost:8080/tally/
+
+#增加路由规则的配置
+#通过zuul.routes.<route>.path和zuul.routes.<route>.url进行配置，<route>为路由的名字，可以任意指定，但是一组path和url的路由名要相同
+zuul:
+  routes:
+    baidu:
+      path: /baidu/**
+      url: http://www.baidu.com
